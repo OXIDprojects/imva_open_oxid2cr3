@@ -24,15 +24,15 @@ $aModule = array(
 	'url'			=> 'http://imva.biz',
 	'email' 		=> 'imva@imva.biz',
 	'extend'		=> array(
-		'account_newsletter'		=>	'imva_open_oxid2cr3/application/controllers/imva_oxid2cr_accnl',
+		'account_newsletter'		=>	'imva.biz/imva_open_oxid2cr3/application/controllers/imva_oxid2cr_accnl',
 	),
 	'files' => array(
-		'imva_oxid2cr'				=>	'imva_open_oxid2cr3/application/controllers/imva_oxid2cr.php',
-      	'imva_oxid2cr_admin'		=>	'imva_open_oxid2cr3/application/controllers/admin/imva_oxid2cr_admin.php',
-      	'imva_oxid2cr_service'		=>	'imva_open_oxid2cr3/application/models/imva_oxid2cr_service.php',
+		'imva_oxid2cr'				=>	'imva.biz/imva_open_oxid2cr3/application/controllers/imva_oxid2cr.php',
+      	'imva_oxid2cr_admin'		=>	'imva.biz/imva_open_oxid2cr3/application/controllers/admin/imva_oxid2cr_admin.php',
+      	'imva_oxid2cr_service'		=>	'imva.biz/imva_open_oxid2cr3/application/models/imva_oxid2cr_service.php',
 	),
 	'templates'	=>	array(
-		'imva_oxid2cr.tpl'			=>	'imva_open_oxid2cr3/application/views/imva_oxid2cr.tpl',
-        'imva_oxid2cr_admin.tpl'	=>	'imva_open_oxid2cr3/application/views/admin/imva_oxid2cr_admin.tpl',
+		'imva_oxid2cr.tpl'			=>	'imva.biz/imva_open_oxid2cr3/application/views/imva_oxid2cr.tpl',
+        'imva_oxid2cr_admin.tpl'	=>	'imva.biz/imva_open_oxid2cr3/application/views/admin/imva_oxid2cr_admin.tpl',
 	),
 );

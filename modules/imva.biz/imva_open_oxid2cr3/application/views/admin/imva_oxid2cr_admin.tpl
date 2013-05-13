@@ -48,7 +48,7 @@
 
 	[{if !$oSvc->isInstalled()}]
 		<div class="msg err">[{oxmultilang ident='IMVA_OXID2CR_INSTALL_MSG'}] 
-		<a href="[{$oViewConf->getSelfLink()}]cl=imva_oxid2cr2_admin&amp;action=setup[{$int_authtl}]"
+		<a href="[{$oViewConf->getSelfLink()}]cl=imva_oxid2cr_admin&amp;action=setup[{$int_authtl}]"
 		rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_INSTALL_NOW'}]</a>.
 		</div>
 	[{/if}]

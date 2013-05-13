@@ -105,15 +105,15 @@
 		[{if $int_action == 'send2cr'}]
 		[{elseif $int_action == 'setup'}]
 			<p><span class="success">[{oxmultilang ident='IMVA_OXID2CR_SETUP_INSTALLING'}]</span><br />
-			[{oxmultilang ident='IMVA_OXID2CR_SETUP_INSTALLING2'}] <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
+			[{oxmultilang ident='IMVA_OXID2CR_SETUP_INSTALLING2'}] <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
 		[{elseif $int_action == 'uninstall'}]	
 			<p><span class="success">[{oxmultilang ident='IMVA_OXID2CR_UNINSTALL3'}]</span></p>
 			<p>[{oxmultilang ident='IMVA_OXID2CR_UNINSTALL4'}]</p>
 		[{/if}]
-		<p><span class="success">[{oxmultilang ident='IMVA_OXID2CR_SUCCESS'}].</span> [{oxmultilang ident='IMVA_OXID2CR_AFFECTED_ROWS'}]: [{$affected_rows}]. <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
+		<p><span class="success">[{oxmultilang ident='IMVA_OXID2CR_SUCCESS'}].</span> [{oxmultilang ident='IMVA_OXID2CR_AFFECTED_ROWS'}]: [{$affected_rows}]. <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
 		
 	[{elseif $int_frm_state == 'fail'}]
-		<p><span class="fail">[{oxmultilang ident='IMVA_OXID2CR_FAILURE'}].</span> <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
+		<p><span class="fail">[{oxmultilang ident='IMVA_OXID2CR_FAILURE'}].</span> <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
 	[{/if}]
 	
 	[{if $int_action}]
@@ -134,26 +134,26 @@
 		<input type="hidden" name="imva_frm_chk" value="1" />
 		<input type="submit" value="[{oxmultilang ident='IMVA_OXID2CR_NAV_RUN'}]" class="run" />
 		</form>
-		<p><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2[{$int_authtl}]" class="btn">[{oxmultilang ident='IMVA_OXID2CR_NAV_CANCEL'}]</a>*}]
+		<p><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr[{$int_authtl}]" class="btn">[{oxmultilang ident='IMVA_OXID2CR_NAV_CANCEL'}]</a>*}]
 	[{else}]
 		[{*if $allowed_action == 'notallowed'}]
-			<p><span class="fail">[{oxmultilang ident='IMVA_OXID2CR_NOTUNDERSTOOD'}].</span> <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
+			<p><span class="fail">[{oxmultilang ident='IMVA_OXID2CR_NOTUNDERSTOOD'}].</span> <a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_NAV_BACK'}]</a></p>
 		[{/if*}]
 		<h2>[{oxmultilang ident='IMVA_OXID2CR_SELECT_ACTION_H'}]</h2>
 		<p>[{oxmultilang ident='IMVA_OXID2CR_SELECT_ACTION'}]</p>
 		<ul>
-		<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2&amp;action=send2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_TRANSFER2CR'}]</a> ([{oxmultilang ident='IMVA_OXID2CR_YETOPEN'}]: [{$oView->getOpenSubscribers()}])</li>
-		[{*<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2&amp;action=cancelcr2ox[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_CANCEL_CR2OX'}]</a></li>*}]
-		<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2&amp;action=cancelox2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_CANCEL_OX2CR'}]</a> ([{oxmultilang ident='IMVA_OXID2CR_UPDATEABLE'}]: [{$oView->getAmountOfCancellers()}])</li>
+		<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr&amp;action=send2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_TRANSFER2CR'}]</a> ([{oxmultilang ident='IMVA_OXID2CR_YETOPEN'}]: [{$oView->getOpenSubscribers()}])</li>
+		[{*<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr&amp;action=cancelcr2ox[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_CANCEL_CR2OX'}]</a></li>*}]
+		<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr&amp;action=cancelox2cr[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_CANCEL_OX2CR'}]</a> ([{oxmultilang ident='IMVA_OXID2CR_UPDATEABLE'}]: [{$oView->getAmountOfCancellers()}])</li>
 		[{if $oView->getTransferredSubscribers() > 0}]
-			<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2&amp;action=updateSent[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_UPDATESENT'}]</a>
+			<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr&amp;action=updateSent[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_UPDATESENT'}]</a>
 			([{oxmultilang ident='IMVA_OXID2CR_UPDATEABLE'}]: [{$oView->getTransferredSubscribers()}])</li>
 		[{/if}]
 		</ul>
 		
 		<h2>[{oxmultilang ident='IMVA_OXID2CR_SELECT_ACTION_MORE'}]</h2>
 		<ul>
-		<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr2&amp;action=unlockAll[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_UNLOCKALL'}]</a> ([{oxmultilang ident='IMVA_OXID2CR_ALREADYSENT'}]: [{$oView->getTransferredSubscribers()}])</li>
+		<li><a href="[{$oViewConf->getSslSelfLink()}]cl=imva_oxid2cr&amp;action=unlockAll[{$int_authtl}]" rel="nofollow">[{oxmultilang ident='IMVA_OXID2CR_UNLOCKALL'}]</a> ([{oxmultilang ident='IMVA_OXID2CR_ALREADYSENT'}]: [{$oView->getTransferredSubscribers()}])</li>
 		</ul>
 		[{*<hr />
 		<p>[{oxmultilang ident='IMVA_OXID2CR_ABOUTGUI'}]</p>*}]
