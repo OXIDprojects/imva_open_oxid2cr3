@@ -49,6 +49,12 @@ class imva_oxid2cr extends oxUbase{
 	 */
 	protected $_prfm_max_lines;
 	
+	
+	
+	/**
+	 * Constructor
+	 * Get and set some configuration parameters
+	 */
 	function __construct(){
 		$oSvc = new imva_oxid2cr_service;
 		
@@ -57,10 +63,11 @@ class imva_oxid2cr extends oxUbase{
 		$this->_prfm_max_lines = $oSvc->readImvaConfig('prfm_max_lines');
 	}
 	
+	
+	
 	/**
 	 * Configuration Part
 	 * Contains an Array with the reqired settings: licensing, connection, Oxid params
-	 * ACCNL (copy)
 	 */	
 	private function config($sParam){
 		
@@ -78,10 +85,10 @@ class imva_oxid2cr extends oxUbase{
 			return $aConfigParams[$sParam];
 		}
 		else{
-			//print_r('IMVA_CL_OXID2CR_FNC_CONFIG:_'.$sParam.'<br />');
 			return false;
 		}		
 	}
+	
 	
 	
 	/**
@@ -140,7 +147,9 @@ class imva_oxid2cr extends oxUbase{
 		$this->_imva_action_logger(collectSubscribers,'','','','',$sMode);
 	}
 	
-	//Put cancellers into an array
+	/**
+	 * Put cancellers into an array
+	 */
 	private function _collectOxidCancellers(){
 		$oRequestCancellers = oxDb::getDB(true)->execute($this->_getCancellersFromDb());
 		
@@ -169,7 +178,6 @@ class imva_oxid2cr extends oxUbase{
 				if ($this->_debug == '1'){
 					echo 'Sending canceller to CR<br />';
 				}
-				//$this->_sendToCr($sMode,$aCancellers[$iCounter]['OXFNAME'],$aCancellers[$iCounter]['OXLNAME'],$aCancellers[$iCounter]['OXEMAIL'],$aCancellers[$iCounter]['OXSAL'],$aCancellers[$iCounter]['OXSUBSCRIBED']);
 				$this->_cancelAccnt($aCancellers[$iCounter]['OXEMAIL']);
 
 				if ($this->_debug == '1'){
@@ -191,6 +199,8 @@ class imva_oxid2cr extends oxUbase{
 		
 		$this->_imva_action_logger(collectOxidCancellers,'','','','','default');
 	}
+	
+	
 	
 	/**
 	 * SQL Statements Block
@@ -229,7 +239,11 @@ class imva_oxid2cr extends oxUbase{
 		oxDb::getDB(true)->execute($sSqlRequest);
 	}
 	
-	//uninstall
+	
+	
+	/**
+	 * Uninstall
+	 */
 	private function _removeDb(){
 		$sSqlRequest = "ALTER TABLE oxnewssubscribed DROP imva_oxid2cr_sent";
 		oxDb::getDB(true)->execute($sSqlRequest);
@@ -237,7 +251,13 @@ class imva_oxid2cr extends oxUbase{
 		oxDb::getDB(true)->execute($sSqlRequest);
 	}
 	
-	//Create SQL Request to mark sent users in db
+	
+	
+	/**
+	 * Create SQL Request to mark sent users in db
+	 * @param string $sMail
+	 * @return string
+	 */
 	private function _buildUserUpdater($sMail){
 		$sSqlRequest = "UPDATE oxnewssubscribed ";
 		$sSqlRequest .= "SET imva_oxid2cr_sent = 1 ";
@@ -252,12 +272,19 @@ class imva_oxid2cr extends oxUbase{
 		return $sSqlRequest;
 	}
 	
-	private function _updateSentUser($sMail){
+	
+	
+	/**
+	 * Update sent users 
+	 */
+	 private function _updateSentUser($sMail){
 		if ($this->_debug == '1'){
 			echo 'The Users Mail: '.$sMail.'--<br />';
 		}
 		oxDb::getDB(true)->execute($this->_buildUserUpdater($sMail));
 	}
+	
+	
 	
 	/**
 	 * Fetch subscribers from db
@@ -276,6 +303,8 @@ class imva_oxid2cr extends oxUbase{
 		
 		return $sSqlRequest;
 	}
+	
+	
 	
 	/**
 	 * Get subscribers SQL statement
@@ -303,7 +332,12 @@ class imva_oxid2cr extends oxUbase{
 		return $sSqlRequest;
 	}
 	
-	//get Cancellers
+	
+	
+	/**
+	 * Get cancellers
+	 * @return string
+	 */
 	private function _getCancellersFromDb(){
 		$sSqlRequest = "SELECT OXEMAIL FROM ";
 		//$sSqlRequest .= "oxnewssubscribed WHERE OXDBOPTIN = 0 AND OXEMAILFAILED = 0 ";
@@ -320,7 +354,12 @@ class imva_oxid2cr extends oxUbase{
 		return $sSqlRequest;
 	}
 	
-	//Unlock all Users in order to enable for re-upload
+
+	
+	/**
+	 * Unlock transferred users in order to enable for re-upload
+	 * @return string
+	 */
 	private function _buildUserUnlocker(){
 		$sSqlRequest = "UPDATE oxnewssubscribed ";
 		$sSqlRequest .= "SET imva_oxid2cr_sent = 0 ";
@@ -333,18 +372,26 @@ class imva_oxid2cr extends oxUbase{
 		return $sSqlRequest;
 	}	
 	
-	//Get Numbers
+	
+	
+	/**
+	 * Get amount of open subscribers
+	 */
 	public function getOpenSubscribers(){
 		$sSqlRequest = "SELECT COUNT(*) FROM oxnewssubscribed WHERE imva_oxid2cr_sent = 0 AND imva_oxid2cr_cancelled = 0 AND OXDBOPTIN = 1 and OXEMAILFAILED = 0 AND OXID != '".$this->config('oxid_adminid')."'";
 		$oReq = oxDb::getDB(true)->execute($sSqlRequest);
 		return $oReq->fields['COUNT(*)'];
 	}
 	
+	
+	
 	public function getTransferredSubscribers(){
 		$sSqlRequest = "SELECT COUNT(*) FROM oxnewssubscribed WHERE imva_oxid2cr_sent = 1 AND OXDBOPTIN = 1 and OXEMAILFAILED = 0";
 		$oReq = oxDb::getDB(true)->execute($sSqlRequest);
 		return $oReq->fields['COUNT(*)'];
 	}
+	
+	
 	
 	public function getAmountOfCancellers(){
 		if (!$this->_isDemoLicense()){
@@ -357,6 +404,8 @@ class imva_oxid2cr extends oxUbase{
 		}
 	}
 	
+	
+	
 	public function countRows(){
 		if (($this->getAction == 'unlockAll') and ($oConfig->getParameter('imva_frm_chk') == 1) and ($this->imva_auth() == true)){
 			return $this->getTransferredSubscribers();
@@ -368,6 +417,8 @@ class imva_oxid2cr extends oxUbase{
 			return $this->_prfm_max_lines;
 		}
 	}
+	
+	
 	
 	private function _imva_action_logger($action,$d1,$d2,$d3,$d4,$p){
 		$sSqlRequest = "INSERT INTO imva_oxidmodules (mod_name, action, data1, data2, data3, data4, param, timestamp) VALUES ('imva_oxid2cr3', '".$action."', '".$d1."', '".$d2."', '".$d3."', '".$d4."', '".$p."', CURRENT_TIMESTAMP)";
@@ -398,6 +449,7 @@ class imva_oxid2cr extends oxUbase{
 				return 'n';
 		}
 	}
+	
 	
 	
 	/**
@@ -452,6 +504,8 @@ class imva_oxid2cr extends oxUbase{
 		unset($aUserdata,$sCrReply,$oSoap);
 	}
 	
+	
+	
 	/**
 	 * Send cancelled subscriptions to CR
 	 */
@@ -487,9 +541,12 @@ class imva_oxid2cr extends oxUbase{
 	}
 	
 	
+	
 	/**
 	 * GUI Helpers // Actions
 	 */
+	
+	
 	
 	/**
 	 * action getter
@@ -506,6 +563,8 @@ class imva_oxid2cr extends oxUbase{
 			return false;
 		}
 	}
+	
+	
 	
 	/**
 	 * action caller
@@ -555,6 +614,8 @@ class imva_oxid2cr extends oxUbase{
 		}
 	}
 	
+	
+	
 	/**
 	 * function imva_auth
 	 * 
@@ -569,11 +630,14 @@ class imva_oxid2cr extends oxUbase{
 		else{
 			return false;
 		}
-	}	
+	}
+
+	
 
 	private function _unlockAllUsers(){
 		oxDb::getDB(true)->execute($this->_buildUserUnlocker());
 	}
+	
 	
 	
 	/**
@@ -594,9 +658,7 @@ class imva_oxid2cr extends oxUbase{
 		$oConfig = $this->getConfig();
 		$this->_aViewData['affected_rows'] = 2;
 		
-		/**
-		 * Operation parameters
-		 */
+		// Operation parameters
 		if ($oConfig->getParameter('debug') != ''){
 			$this->_debug = $oConfig->getParameter('debug');
 		}
@@ -615,9 +677,7 @@ class imva_oxid2cr extends oxUbase{
 			$this->_aViewData['int_action'] = $this->getAction();
 		}
 		
-		/**
-		 * Attachable Parameters for hyperlinks
-		 */
+		// Attachable Parameters for hyperlinks
 		if ($this->imva_auth()){
 			$this->_aViewData['int_authtl'] = '&amp;imva_auth_key='.$this->config('internal_unlock_secret').'&amp;imva_frm_chk=1&amp;client=user';
 			if ($this->_debug){$this->_aViewData['int_authtl'] .= '&amp;debug='.$this->_debug;}

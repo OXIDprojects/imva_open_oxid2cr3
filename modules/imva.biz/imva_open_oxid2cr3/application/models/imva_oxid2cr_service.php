@@ -36,6 +36,9 @@
 
 class imva_oxid2cr_service extends oxBase
 {
+	
+	
+	
 	/**
 	 * render
 	 * @deprecated
@@ -46,6 +49,8 @@ class imva_oxid2cr_service extends oxBase
 		parent::render();
 		return parent;
 	}
+	
+	
 	
 	/**
 	 * _getBasics
@@ -70,6 +75,8 @@ class imva_oxid2cr_service extends oxBase
 		}
 	}
 	
+	
+	
 	/**
 	 * Read config data from imva_config
 	 * 
@@ -87,6 +94,8 @@ class imva_oxid2cr_service extends oxBase
 		}
 	}
 	
+	
+	
 	/**
 	 * Database setup
 	 * 
@@ -97,6 +106,8 @@ class imva_oxid2cr_service extends oxBase
 		$sSqlRequest = "<SQL statement GOES HERE>";
 		oxDb::getDB(true)->execute($sSqlRequest);
 	}
+	
+	
 	
 	/**
 	 * getVersion
@@ -109,6 +120,8 @@ class imva_oxid2cr_service extends oxBase
 			'<i>'.$this->_getBasics('edition').'</i> '.
 			'build '.$this->_getBasics('build');
 	}
+	
+	
 	
 
 	/**

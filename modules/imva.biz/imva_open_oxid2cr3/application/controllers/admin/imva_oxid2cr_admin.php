@@ -45,11 +45,10 @@ class imva_oxid2cr_admin extends oxAdminView
 		$oSvc = new imva_oxid2cr_service;
 		$this->_aViewData['oSvc'] = $oSvc;
 		
-		//$this->_aViewData['edit'] = 
-		
-		
 		return $this->_sThisTemplate;
 	}
+	
+	
 	
 	/**
 	 * Write config data from imva_config

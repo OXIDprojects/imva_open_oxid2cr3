@@ -35,6 +35,9 @@
 
 class imva_oxid2cr_mdl extends oxBase
 {
+	
+	
+	
 	/**
 	 * Initiates Obejct Structure
 	 * @param $aParams
