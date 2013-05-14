@@ -30,15 +30,15 @@
  * @author Johannes Ackermann
  *
  * 12/3/3-13/5/14
- * V 2.9.2.9
+ * V 2.9.2.10
  *
  */
 
 class imva_oxid2cr_admin extends oxAdminView
 {
+	
 	protected $_sThisTemplate = 'imva_oxid2cr_admin.tpl';
-	protected static $_oSvc;
-	protected static $_oConfig;
+	protected $_oSvc;
 	
 	
 	
@@ -50,7 +50,6 @@ class imva_oxid2cr_admin extends oxAdminView
 	{
 		parent::__construct();
 		$this->_oSvc = new imva_oxid2cr_service;
-		$this->_oConfig = $this->getConfig();
 	}
 	
 	

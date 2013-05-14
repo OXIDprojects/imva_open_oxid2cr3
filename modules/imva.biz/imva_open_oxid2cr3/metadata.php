@@ -60,7 +60,7 @@ $aModule = array(
 	'files' => array(
 		'imva_oxid2cr'				=>	'imva.biz/imva_open_oxid2cr3/application/controllers/imva_oxid2cr.php',
       	'imva_oxid2cr_admin'		=>	'imva.biz/imva_open_oxid2cr3/application/controllers/admin/imva_oxid2cr_admin.php',
-      	'imva_oxid2cr_support'		=>	'imva.biz/imva_open_oxid2cr3/application/services/imva_oxid2cr_support.php',
+      	'imva_oxid2cr_support'		=>	'imva.biz/imva_open_oxid2cr3/application/models/imva_oxid2cr_support.php',
       	'imva_oxid2cr_service'		=>	'imva.biz/imva_open_oxid2cr3/application/models/imva_oxid2cr_service.php',
 	),
 	'templates'	=>	array(

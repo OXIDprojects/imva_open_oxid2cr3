@@ -30,14 +30,12 @@
  * @author Johannes Ackermann
  *
  * 12/3/3-13/5/14
- * V 2.9.2.9
+ * V 2.9.2.10
  *
  */
 
 class imva_oxid2cr_support extends oxBase
 {
-	
-	protected static $_oConfig;
 	
 	/**
 	 * __construct
