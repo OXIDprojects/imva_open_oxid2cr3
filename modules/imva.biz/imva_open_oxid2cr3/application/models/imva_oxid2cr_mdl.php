@@ -1,4 +1,5 @@
 <?php
+
 /**
  * IMVA Oxid2CR 3 (Open Source Edition)
  * 
@@ -28,8 +29,8 @@
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  * 
- * 12/3/3-13/5/13
- * V 2.9.0.0
+ * 12/3/3-13/5/14
+ * V 2.9.2.9
  * 
  */
 
