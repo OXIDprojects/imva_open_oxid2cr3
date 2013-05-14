@@ -107,7 +107,7 @@ class imva_oxid2cr_service extends oxBase
 			'build '.$this->_getBasics('build');
 		
 		if ($this->_getBasics('edition') == 'open'){
-			$sReturn .= '<br />This module is free. You can <a href="http://imva.biz/blog/2013/10/oxid-modul-adapter-fur-cleverreach-wird-quelloffen" target="_blank">support the developers by flattr</a>';
+			$sReturn .= '<br />This module is free. You can <a href="http://imva.biz/blog/2013/05/oxid-modul-adapter-fur-cleverreach-wird-quelloffen/" target="_blank">support the developers by flattr</a>';
 		}
 		
 		return $sReturn;
