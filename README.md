@@ -7,3 +7,6 @@ CleverReach.
 
 Dieses Modul wird hier so wie es ist, ohne Anspruch auf Fehlerfreiheit und Funktionalität, bereitgestellt. Es liegt in
 einem frühen Entwicklungsstadium vor.
+
+Mehr:
+http://imva.biz/blog/2013/05/oxid-modul-adapter-fur-cleverreach-wird-quelloffen/
