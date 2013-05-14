@@ -64,7 +64,7 @@ class imva_oxid2cr_service extends oxBase
 	function _getBasics($sInfo)
 	{
 		$aBasics = array(
-				'version'	=>	'2.9.2.9',
+				'version'	=>	'2.9.2.10',
 				'build'		=>	'130514',
 				'edition'	=>	'open',		
 		);

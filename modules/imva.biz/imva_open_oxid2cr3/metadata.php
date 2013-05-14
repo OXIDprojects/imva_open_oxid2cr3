@@ -30,7 +30,7 @@
  * @author Johannes Ackermann
  *
  * 12/3/3-13/5/14
- * V 2.9.2.9
+ * V 2.9.2.10
  *
  */
 
@@ -50,7 +50,7 @@ $aModule = array(
 		'de'	=>	'<p>imva.biz Adapter für CleverReach -- quelloffene Ausgabe</p><p>Mit dem <i>Adapter für CleverReach</i> von imva.biz übertragen Sie Newsletter-Abonnenten aus Ihrem Shop sicher und einfach an CleverReach. Die Schnittstelle berücksichtigt auch aktualisierte Kundendaten und Abo-Kündigungen.</p>',
 	),
 	'thumbnail'		=> 'out/src/imva_oxid2cr-logo.png',
-	'version'		=> '2.9.2.9',
+	'version'		=> '2.9.2.10',
 	'author'		=> 'Johannes Ackermann',
 	'url'			=> 'http://imva.biz',
 	'email' 		=> 'imva@imva.biz',
