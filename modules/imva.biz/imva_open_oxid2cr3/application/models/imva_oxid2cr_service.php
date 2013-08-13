@@ -1,128 +1,73 @@
 <?php
 
 /**
- * IMVA Oxid2CR 3 (Open Source Edition)
+ * imva.biz "Oxid2CR 3" CleverReach Connector (Open Source Edition)
  * 
  * 
- * Redistribution permitted.
  * 
- * Weitergabe verboten.
- * 
+ * For redistribution in the provicer's network only.
  *
- * This Software is intellectual property of imva.biz respectively of its author and is protected
- * by copyright law. This software product is open-source, but not freeware.
+ * Weitergabe außerhalb des Anbieternetzwerkes verboten.
  *
- * Any unauthorized use of this software product - usage without a valid license,
- * modification, copying, redistribution, transmission is a violation of the license agreement
- * and will be prosecuted by civil and criminal law.
- * 
- * By applying and using this software product, you agree to the terms and condition of usage and
- * furthermore agree, not to share information, source codes, technologies, credentials and addresses
- * of any kind.
- * 
- *  
+ *
+ *
+ * This software is intellectual property of imva.biz respectively of its author and is protected
+ * by copyright law. This software product is provided "as it is" with no guarantee.
+ *
+ * You are free to use this software and to modify it in order to fit your requirements.
+ *
+ * Any modification, copying, redistribution, transmission outsitde of the provider's platforms
+ * is a violation of the license agreement and will be prosecuted by civil and criminal law.
+ *
+ * By applying and using this software product, you agree to the terms and conditions of use.
+ *
+ *
+ *
+ * Diese Software ist geistiges Eigentum von imva.biz respektive ihres Autors und ist durch das
+ * Urheberrecht geschützt. Diese Software wird ohne irgendwelche Garantien und "wie sie ist"
+ * angeboten.
+ *
+ * Sie sind berechtigt, diese Software frei zu nutzen und auf Ihre Bedürfnisse anzupassen.
+ *
+ * Jegliche Modifikation, Vervielfältigung, Redistribution, Übertragung zum Zwecke der
+ * Weiterentwicklung außerhalb der Netzwerke des Anbieters ist untersagt und stellt einen Verstoß
+ * gegen die Lizenzvereinbarung dar.
+ *
  * Mit der Übernahme dieser Software akzeptieren Sie die zwischen Ihnen und dem Herausgeber
- * festgehaltenen Bedingungen und wahren Stillschweigen über die Ihnen zugänglich gemachten
- * Informationen, Quellcodes, Technologien, Zugangsdaten und Adressen jeglicher Art.
- * Der Bruch dieser Bedingungen kann Schadensersatzforderungen nach sich ziehen.
+ * festgehaltenen Bedingungen. Der Bruch dieser Bedingungen kann Schadensersatzforderungen nach
+ * sich ziehen.
+ *
+ *
+ *
+ * (EULA-13/7-OS)
  * 
+ * 
+ *
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  * 
- * 12/3/3-13/5/14
- * V 2.9.2.10
+ * 12/3/3-13/8/13
+ * V 2.9.5
  * 
  */
 
-class imva_oxid2cr_service extends oxBase
+class imva_oxid2cr_service extends imva_oxid2cr_service_parent
 {
 	
 	public $blMission;
 	protected $_oSupport;
-	
-	
-	
-	/**
-	 * __construct
-	 * Sets Config and Service
-	 *
-	 * @return null
-	 */
-	public function __construct(){
-		parent::__construct();
-		$this->_oConfig = $this->getConfig();
-	}
-	
-	
-	
-	/**
-	 * _getBasics
-	 * Some bsaic information about this module. Hard-coded by choice.
-	 * 
-	 * @return string
-	 */
-	function _getBasics($sInfo)
-	{
-		$aBasics = array(
-				'version'	=>	'2.9.2.10',
-				'build'		=>	'130514',
-				'edition'	=>	'open',		
-		);
-		
-		if (!$sInfo)
-			return false;
-		return $aBasics[$sInfo];
-	}
-	
-	
-	
-	/**
-	 * Read config data from imva_config
-	 * 
-	 * @return string
-	 */
-	function readImvaConfig($sParam = null)
-	{
-		if ($sParam)
-		{
-			$sSqlRequest = 'SELECT value FROM imva_config WHERE module_name = "imva_oxid2cr3" AND param = "'.$sParam.'"';
-			return oxDb::getDb(true)->getone($sSqlRequest);
-		}
-		else{
-			return false;
-		}
-	}
-	
-	
-	
-	/**
-	 * getVersion
-	 *
-	 * @return string
-	 */
-	public function getVersion()
-	{
-		$sReturn = $this->_getBasics('version').' '.
-			'<i>'.$this->_getBasics('edition').'</i> '.
-			'build '.$this->_getBasics('build');
-		
-		if ($this->_getBasics('edition') == 'open'){
-			$sReturn .= '<br />This module is free. You can <a href="http://imva.biz/blog/2013/05/oxid-modul-adapter-fur-cleverreach-wird-quelloffen/" target="_blank">support the developers by flattr</a>';
-		}
-		
-		return $sReturn;
-	}
+	public $sModuleId = 'imva_open_oxid2cr3';
 	
 	
 
 	/**
 	 * isInstalled
-	 * Tries to find out if the db has been set up.
+	 * Tries to find out if the database has been set up.
 	 * 
 	 * @return boolean
 	 */
 	public function isInstalled(){
-		if ($this->readImvaConfig('clre_wsdl_url')){
+		if ($this->readImvaConfig($this->sModuleId,'clre_wsdl_url')){
 			return true;
 		}
 		else{
@@ -144,8 +89,8 @@ class imva_oxid2cr_service extends oxBase
 		//add
 		if ($sMode == 'add'){
 			$sSqlRequest .= "and imva_oxid2cr_sent = 0 ";
-			if ($this->readImvaConfig('prfm_max_lines')){
-				$sSqlRequest .= "LIMIT ".$this->readImvaConfig('prfm_max_lines')." ";
+			if ($this->readImvaConfig($this->sModuleId,'prfm_max_lines')){
+				$sSqlRequest .= "LIMIT ".$this->readImvaConfig($this->sModuleId,'prfm_max_lines')." ";
 			}
 		}
 		
@@ -155,7 +100,7 @@ class imva_oxid2cr_service extends oxBase
 		}
 	
 		//debugger
-		if ($this->readImvaConfig('debug') == '1'){
+		if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 			echo '_getSubscribers: ';
 			echo $sSqlRequest;
 			echo '--<br />';
@@ -176,9 +121,9 @@ class imva_oxid2cr_service extends oxBase
 		$sSqlRequest .= "oxnewssubscribed ";
 		$sSqlRequest .= "WHERE imva_oxid2cr_cancelled = 1 ";
 		$sSqlRequest .= "AND imva_oxid2cr_sent = 0 ";
-		if ($this->readImvaConfig('prfm_max_lines')){$sSqlRequest .= "LIMIT ".$this->_prfm_max_lines." ";}
+		if ($this->readImvaConfig($this->sModuleId,'prfm_max_lines')){$sSqlRequest .= "LIMIT ".$this->_prfm_max_lines." ";}
 	
-		if ($this->readImvaConfig('debug') == '1'){
+		if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 			echo '_getCancellersFromDb';
 			echo $sSqlRequest;
 			echo '--<br />';
@@ -199,7 +144,7 @@ class imva_oxid2cr_service extends oxBase
 		$sSqlRequest .= "SET imva_oxid2cr_sent = 0 ";
 		$sSqlRequest .= "WHERE imva_oxid2cr_sent = 1";
 	
-		if ($this->readImvaConfig('debug') == '1'){
+		if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 			echo '_buildUserUnlocker';
 			echo $sSqlRequest;
 			echo '--<br />';
@@ -281,35 +226,6 @@ class imva_oxid2cr_service extends oxBase
 	
 	
 	/**
-	 * action getter
-	 *
-	 * @return string
-	 */
-	public function getAction(){
-		if ($this->_oConfig->getParameter('action') || $this->_oConfig->getParameter('action') != ''){
-			return $this->_oConfig->getParameter('action');
-		}
-		else{
-			return false;
-		}
-	}
-	
-	
-	
-	/**
-	 * logger
-	 * Writes actions to db
-	 *
-	 * @return null
-	 */
-	public function log($action,$d1 = '',$d2 = '',$d3 = '',$d4 = '',$p = ''){
-		$sSqlRequest = "INSERT INTO imva_oxidmodules (mod_name, action, data1, data2, data3, data4, param, timestamp) VALUES ('imva_oxid2cr3', '".$action."', '".$d1."', '".$d2."', '".$d3."', '".$d4."', '".$p."', CURRENT_TIMESTAMP)";
-		oxDb::getDb(true)->execute($sSqlRequest);
-	}
-	
-	
-	
-	/**
 	 * Slide on the Soap:
 	 *
 	 * Add Subscribers to CleverReach
@@ -318,22 +234,22 @@ class imva_oxid2cr_service extends oxBase
 	 * @return null
 	 */
 	private function _sendToCr($sMode,$sForename,$sLastname,$sEmail,$sSalutation,$sSubscDate){
-		if ($this->readImvaConfig('simulation') == '0'){
-			$oSoap = new SoapClient($this->readImvaConfig('clre_wsdl_url'));
+		if ($this->readImvaConfig($this->sModuleId,'simulation') == '0'){
+			$oSoap = new SoapClient($this->readImvaConfig($this->sModuleId,'clre_wsdl_url'));
 			
 			//Retrieve available receiver lists
-			$sCrReply = $oSoap->groupGetList($this->readImvaConfig('clre_api_key'));
+			$sCrReply = $oSoap->groupGetList($this->readImvaConfig($this->sModuleId,'clre_api_key'));
 		
 			if ($sCrReply->status == 'SUCCESS'){
 				$this->blMission = true;
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo 'Connection State is SUCCESS';
 					var_dump($sCrReply->data);
 				}
 			}
 			else{
 				$this->blMission = false;
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo 'Connection State is FAILURE';
 					var_dump($sCrReply->message);
 				}
@@ -354,11 +270,11 @@ class imva_oxid2cr_service extends oxBase
 			
 			
 			if ($sMode == 'add'){
-				$oSoap->receiverAdd($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$aUserdata);
-				$oSoap->receiverUpdate($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$aUserdata);
+				$oSoap->receiverAdd($this->readImvaConfig($this->sModuleId,'clre_api_key'),$this->readImvaConfig($this->sModuleId,'clre_list_id'),$aUserdata);
+				$oSoap->receiverUpdate($this->readImvaConfig($this->sModuleId,'clre_api_key'),$this->readImvaConfig($this->sModuleId,'clre_list_id'),$aUserdata);
 			}
 			elseif ($sMode == 'update'){
-				$oSoap->receiverUpdate($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$aUserdata);
+				$oSoap->receiverUpdate($this->readImvaConfig($this->sModuleId,'clre_api_key'),$this->readImvaConfig($this->sModuleId,'clre_list_id'),$aUserdata);
 			}
 			//elseif ($sMode == 'disable'){
 			//$sCrReply = $oSoap->receiverSetInactive($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$aUserdata);
@@ -379,22 +295,22 @@ class imva_oxid2cr_service extends oxBase
 	 * Set it to "disabled", do not delete data!
 	 */
 	private function _cancelAccnt($sEmail){
-		if ($this->readImvaConfig('simulation') == '0'){
-			$oSoap = new SoapClient($this->readImvaConfig('clre_wsdl_url'));
+		if ($this->readImvaConfig($this->sModuleId,'simulation') == '0'){
+			$oSoap = new SoapClient($this->readImvaConfig($this->sModuleId,'clre_wsdl_url'));
 		
 			//Retrieve available receiver lists
-			$sCrReply = $oSoap->groupGetList($this->readImvaConfig('clre_api_key'));
+			$sCrReply = $oSoap->groupGetList($this->readImvaConfig($this->sModuleId,'clre_api_key'));
 		
 			if ($sCrReply->status == 'SUCCESS'){
 				$this->blMission = true;
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo 'Connection State is SUCCESS';
 					var_dump($sCrReply->data);
 				}
 			}
 			else{
 				$this->blMission = false;
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo 'Connection State is FAILURE';
 					var_dump($sCrReply->message);
 				}
@@ -408,9 +324,9 @@ class imva_oxid2cr_service extends oxBase
 					'source' => 'Oxid eShop via imva_oxid2cr3',
 			);
 		
-			$oSoap->receiverSetInactive($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$aUserdata['email']);
+			$oSoap->receiverSetInactive($this->readImvaConfig($this->sModuleId,'clre_api_key'),$this->readImvaConfig($this->sModuleId,'clre_list_id'),$aUserdata['email']);
 			
-			$this->log('cancelAccount',$aUserdata['email'],'','','','disable');
+			$this->log($this->sModuleId,'cancelAccount',$aUserdata['email'],'','','','disable');
 			
 			//Clean up
 			unset($aUserdata,$sCrReply,$oSoap,$theUser);
@@ -430,7 +346,7 @@ class imva_oxid2cr_service extends oxBase
 		$aRequestSubscribers = oxDb::getDb(true)->getAll($this->_getSubscribers($sMode)); //subscribers array
 		$oRequestSubscribers = oxDb::getDb(true)->execute($this->_getSubscribers($sMode)); //subscribers reques object
 				
-		if ($this->readImvaConfig('debug') == '1'){
+		if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 			echo '<pre>';
 			var_dump($aRequestSubscribers);
 			echo '</pre>';
@@ -444,7 +360,7 @@ class imva_oxid2cr_service extends oxBase
 	
 			while ($iCounter <= $oRequestSubscribers->recordCount() - 1){
 				
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo $iCounter.': ';
 				}
 				$aSubscribers[$iCounter] = array(
@@ -455,20 +371,16 @@ class imva_oxid2cr_service extends oxBase
 						'OXSUBSCRIBED'	=>	$aRequestSubscribers[0][4],
 				);
 	
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					var_dump($aSubscribers);
 					echo '<hr />';
 					echo $aSubscribers[$iCounter]['OXEMAIL'];
 					echo '<br/>';
-				}
-	
-				if ($this->readImvaConfig('debug') == '1'){
+					
 					echo 'aSubscribers:<br />';
 					print_r($aSubscribers);
 					echo ' --aSubscribers<br />';
-				}
-				
-				if ($this->readImvaConfig('debug') == '1'){
+					
 					echo 'Updating subscribers dataset<br />';
 				}
 	
@@ -486,7 +398,7 @@ class imva_oxid2cr_service extends oxBase
 			return false;
 		}
 	
-		$this->log('collectSubscribers','','','','',$sMode);
+		$this->log($this->sModuleId,'collectSubscribers','','','','',$sMode);
 	}
 	
 	
@@ -507,7 +419,7 @@ class imva_oxid2cr_service extends oxBase
 			$iCounter = 0;
 	
 			while ($iCounter <= $oRequestCancellers->recordCount() - 1){
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo $iCounter.': ';
 				}
 				$aCancellers[$iCounter] = array(
@@ -518,12 +430,10 @@ class imva_oxid2cr_service extends oxBase
 						'OXSUBSCRIBED'	=>	$aRequestCancellers[0][4],
 				);
 	
-				if ($this->readImvaConfig('debug') == '1'){
+				if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 					echo $aCancellers[$iCounter]['OXEMAIL'];
 					echo '<br/>';
-				}
-	
-				if ($this->readImvaConfig('debug') == '1'){
+					
 					echo 'Sending canceller to CR<br />';
 				}
 				//$this->_sendToCr($sMode,$aCancellers[$iCounter]['OXFNAME'],$aCancellers[$iCounter]['OXLNAME'],$aCancellers[$iCounter]['OXEMAIL'],$aCancellers[$iCounter]['OXSAL'],$aCancellers[$iCounter]['OXSUBSCRIBED']);
@@ -546,7 +456,7 @@ class imva_oxid2cr_service extends oxBase
 			return false;
 		}
 	
-		$this->log('collectOxidCancellers','','','','','default');
+		$this->log($this->sModuleId,'collectOxidCancellers','','','','','default');
 	}
 	
 	
@@ -564,7 +474,7 @@ class imva_oxid2cr_service extends oxBase
 		$sSqlRequest .= "AND imva_oxid2cr_sent = 0 ";
 		$sSqlRequest .= "LIMIT 1";
 	
-		if ($this->readImvaConfig('debug') == '1'){
+		if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 			echo $sSqlRequest;
 		}
 	
@@ -580,7 +490,7 @@ class imva_oxid2cr_service extends oxBase
 	 * @return null
 	 */
 	private function _updateSentUser($sMail){
-		if ($this->readImvaConfig('debug') == '1'){
+		if ($this->readImvaConfig($this->sModuleId,'debug') == '1'){
 			echo '_updateSentUser '.$sMail.'--<br />';
 		}
 		oxDb::getDb(true)->execute($this->_buildUserUpdater($sMail));
@@ -648,8 +558,8 @@ class imva_oxid2cr_service extends oxBase
 	public function enableSubscription($sEmail){
 		$this->_marktoSend($sEmail);
 		
-		$oSoap = new SoapClient($this->readImvaConfig('clre_wsdl_url'));
-		$oSoap->receiverSetActive($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$sEmail);
+		$oSoap = new SoapClient($this->readImvaConfig($this->sModuleId,'clre_wsdl_url'));
+		$oSoap->receiverSetActive($this->readImvaConfig($this->sModuleId,'clre_api_key'),$this->readImvaConfig($this->sModuleId,'clre_list_id'),$sEmail);
 	}
 	
 	
@@ -660,8 +570,8 @@ class imva_oxid2cr_service extends oxBase
 	public function disableSubscription($sEmail){
 		$this->_marktoCancel($sEmail);
 		
-		$oSoap = new SoapClient($this->readImvaConfig('clre_wsdl_url'));
-		$oSoap->receiverSetInactive($this->readImvaConfig('clre_api_key'),$this->readImvaConfig('clre_list_id'),$sEmail);
+		$oSoap = new SoapClient($this->readImvaConfig($this->sModuleId,'clre_wsdl_url'));
+		$oSoap->receiverSetInactive($this->readImvaConfig($this->sModuleId,'clre_api_key'),$this->readImvaConfig($this->sModuleId,'clre_list_id'),$sEmail);
 	}
 	
 	

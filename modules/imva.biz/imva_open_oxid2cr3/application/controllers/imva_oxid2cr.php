@@ -4,47 +4,64 @@
  * IMVA Oxid2CR 3 (Open Source Edition)
  * 
  * 
- * Redistribution permitted.
  * 
- * Weitergabe verboten.
- * 
+ * For redistribution in the provicer's network only.
  *
- * This Software is intellectual property of imva.biz respectively of its author and is protected
- * by copyright law. This software product is open-source, but not freeware.
+ * Weitergabe außerhalb des Anbieternetzwerkes verboten.
  *
- * Any unauthorized use of this software product - usage without a valid license,
- * modification, copying, redistribution, transmission is a violation of the license agreement
- * and will be prosecuted by civil and criminal law.
- * 
- * By applying and using this software product, you agree to the terms and condition of usage and
- * furthermore agree, not to share information, source codes, technologies, credentials and addresses
- * of any kind.
- * 
- *  
+ *
+ *
+ * This software is intellectual property of imva.biz respectively of its author and is protected
+ * by copyright law. This software product is provided "as it is" with no guarantee.
+ *
+ * You are free to use this software and to modify it in order to fit your requirements.
+ *
+ * Any modification, copying, redistribution, transmission outsitde of the provider's platforms
+ * is a violation of the license agreement and will be prosecuted by civil and criminal law.
+ *
+ * By applying and using this software product, you agree to the terms and conditions of use.
+ *
+ *
+ *
+ * Diese Software ist geistiges Eigentum von imva.biz respektive ihres Autors und ist durch das
+ * Urheberrecht geschützt. Diese Software wird ohne irgendwelche Garantien und "wie sie ist"
+ * angeboten.
+ *
+ * Sie sind berechtigt, diese Software frei zu nutzen und auf Ihre Bedürfnisse anzupassen.
+ *
+ * Jegliche Modifikation, Vervielfältigung, Redistribution, Übertragung zum Zwecke der
+ * Weiterentwicklung außerhalb der Netzwerke des Anbieters ist untersagt und stellt einen Verstoß
+ * gegen die Lizenzvereinbarung dar.
+ *
  * Mit der Übernahme dieser Software akzeptieren Sie die zwischen Ihnen und dem Herausgeber
- * festgehaltenen Bedingungen und wahren Stillschweigen über die Ihnen zugänglich gemachten
- * Informationen, Quellcodes, Technologien, Zugangsdaten und Adressen jeglicher Art.
- * Der Bruch dieser Bedingungen kann Schadensersatzforderungen nach sich ziehen.
+ * festgehaltenen Bedingungen. Der Bruch dieser Bedingungen kann Schadensersatzforderungen nach
+ * sich ziehen.
+ *
+ *
+ *
+ * (EULA-13/7)
  * 
+ * 
+ *
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  * 
- * 12/3/3-13/5/14
- * V 2.9.2.9
+ * 12/3/3-13/8/13
+ * V 2.9.5
  * 
  */
 
 class imva_oxid2cr extends oxUbase{
-	
-protected $_sThisTemplate = 'imva_oxid2cr.tpl';
 	
 	
 	
 	/**
 	 * Services and providers
 	 */
-	protected $_oSvc;
-	protected static $_oConfig;
+	protected $_sThisTemplate = 'imva_oxid2cr.tpl';			// Template
+	public $oSvc = null;									// Imva Service
+	public $sModuleId = 'imva_open_oxid2cr3';
+	public $sClient = null;									// Client Name
 	
 	
 	
@@ -56,8 +73,12 @@ protected $_sThisTemplate = 'imva_oxid2cr.tpl';
 	 */
 	public function __construct(){
 		parent::__construct();
-		$this->_oSvc = new imva_oxid2cr_service();
-		$this->_oConfig = $this->getConfig();
+		
+		// Prepare imva.biz Module Service
+		$this->oSvc = oxNew('imva_service');
+		$this->oSvc->init(20130813);
+		
+		$this->sClient = $this->oSvc->req('client');
 	}
 	
 	
@@ -70,33 +91,25 @@ protected $_sThisTemplate = 'imva_oxid2cr.tpl';
 	{
 		parent::render();
 		
-		$this->_aViewData['oSvc'] = $this->_oSvc;
-		$this->_aViewData['client'] = $this->_getUser();
 		
 		
-		/**
-		 * Action handler
-		 */
-		if ($this->_aViewData['action'] == 'send'){
-			$this->_oSvc->collectSubscribers('add');
+		// Action handler
+		$sAction = $this->oSvc->getAction();
+		if ($sAction == 'send'){
+			$this->oSvc->collectSubscribers('add');
 		}
-		elseif ($this->_aViewData['action'] == 'update'){
-			$this->_oSvc->collectSubscribers('update');
+		elseif ($sAction == 'update'){
+			$this->oSvc->collectSubscribers('update');
 		}
-		elseif ($this->_aViewData['action'] == 'cancel'){
-			$this->_oSvc->collectOxidCancellers();
+		elseif ($sAction == 'cancel'){
+			$this->oSvc->collectOxidCancellers();
 		}
-		elseif ($this->_aViewData['action'] == 'unlock'){
-			$this->_oSvc->resetAllSubscriptions();
+		elseif ($sAction == 'unlock'){
+			$this->oSvc->resetAllSubscriptions();
 		}
 		
-		/**
-		 * Client?
-		 */
-		if ($this->_aViewData['client'] == 'user'){
-		}
-		else{
-		}
+		
+		// Template
 		return $this->_sThisTemplate;		
 	}
 	
@@ -109,31 +122,13 @@ protected $_sThisTemplate = 'imva_oxid2cr.tpl';
 	
 	
 	/**
-	 * _getUser
-	 * returns the accessing user
-	 * 
-	 * @return string
-	 */
-	private function _getUser()
-	{
-		if ($this->_getAuthState()){
-			return $this->_oConfig->getRequestParameter('client');
-		}
-		else{
-			return false;
-		}
-	}
-	
-	
-	
-	/**
 	 * _getAuthState
 	 *
 	 * @return boolean
 	 */
 	private function _getAuthState()
 	{
-		if ($this->_oConfig->getRequestParameter('imva_auth_key') == $this->_oSvc->readImvaConfig('secret_key')){
+		if ($this->oSvc->req('imva_auth_key') == $this->oSvc->readImvaConfig($this->sModuleId,'secret_key')){
 			return true;
 		}
 		else{
@@ -151,7 +146,7 @@ protected $_sThisTemplate = 'imva_oxid2cr.tpl';
 	 */
 	private function _frmChk()
 	{
-		if ($this->_oConfig->getRequestParameter('imva_frm_chk') == 1){
+		if ($this->oSvc->req('imva_frm_chk') == 1){
 			return true;
 		}
 		else{
