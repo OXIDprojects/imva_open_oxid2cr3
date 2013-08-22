@@ -55,7 +55,8 @@
 		<div class="msg">[{oxmultilang ident='IMVA_OXID2CR_CRONJOBS'}]
 			[{oxmultilang ident='IMVA_OPEN_OXID2CR3_PINGBOX'}]
 			<a href="http://pingbox.imva.biz">PINGBOX.imva.biz</a>
-			[{oxmultilang ident='IMVA_OPEN_OXID2CR3_PINGBOX2'}]
+			[{oxmultilang ident='IMVA_OPEN_OXID2CR3_PINGBOX2'}].<br />
+			[{oxmultilang ident='IMVA_OPEN_OXID2CR3_CRONJOBS2'}]
 		</div>
 	
 		<label class="l wt_200" for="url_send">[{oxmultilang ident='IMVA_OXID2CR_SENDSUBSCR'}]:</label>

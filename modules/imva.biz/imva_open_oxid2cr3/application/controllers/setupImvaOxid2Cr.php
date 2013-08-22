@@ -46,8 +46,8 @@
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  *
- * 12/8/2-13/8/13
- * V 2.9.5
+ * 12/8/2-13/8/22
+ * V 2.9.5.1
  *
  */
 
@@ -56,7 +56,7 @@ class setupImvaOxid2Cr extends oxUbase
 	/**
 	 * Create tables
 	 */
-	public function onActivate()
+	static function activate()
 	{
 		$sModuleId = 'imva_open_oxid2cr3';
 		$oSvc = oxNew('imva_service');

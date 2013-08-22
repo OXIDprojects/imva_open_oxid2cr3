@@ -74,9 +74,10 @@ $aLang = array(
 		
 		//urls
 		'IMVA_OXID2CR_GETTINGSTARTED'	=>	'Adapter verwenden',
-		'IMVA_OXID2CR_CRONJOBS'			=>	'Sie k&ouml;nnen die folgenden URLs verwenden, um Cronjobs einzurichten und die Schnittstelle auszul&ouml;sen. Klicken Sie auf die Beschreibung, um den kompletten URL zu markieren.',
-		'IMVA_OPEN_OXID2CR3_PINGBOX'	=>	'Wenn Sie keine M&ouml;glichkeit haben, k&ouml;nnen Sie den Dienst',
+		'IMVA_OXID2CR_CRONJOBS'			=>	'Sie k&ouml;nnen die folgenden URLs verwenden, um Cronjobs einzurichten und die Schnittstelle auszul&ouml;sen.',
+		'IMVA_OPEN_OXID2CR3_PINGBOX'	=>	'Falls Sie hierzu keine M&ouml;glichkeit haben, k&ouml;nnen Sie den Dienst',
 		'IMVA_OPEN_OXID2CR3_PINGBOX2'	=>	'nutzen',
+		'IMVA_OPEN_OXID2CR3_CRONJOBS2'	=>	'Klicken Sie auf die Beschreibung, um den kompletten URL zu markieren.',
 		
 		//Settings
 		'IMVA_OXID2CR_CONFIG'			=>	'Konfigurationseinstellungen',
