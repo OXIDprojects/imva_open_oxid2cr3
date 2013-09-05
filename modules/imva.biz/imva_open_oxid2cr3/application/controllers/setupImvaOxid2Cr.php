@@ -1,7 +1,7 @@
 <?php
 
 /**
- * IMVA Oxid2CR 3 (Open Source Edition)
+ * imva.biz "Oxid2CR 3" CleverReach Connector (Open Source Edition)
  *
  *
  *
@@ -46,8 +46,8 @@
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  *
- * 12/8/2-13/8/22
- * V 2.9.5.1
+ * 12/8/2-13/9/5
+ * V 2.9.5.2
  *
  */
 
@@ -60,8 +60,7 @@ class setupImvaOxid2Cr extends oxUbase
 	{
 		$sModuleId = 'imva_open_oxid2cr3';
 		$oSvc = oxNew('imva_service');
-		$oSvc->init(20130813);
-		$this->oSvc->log($sModuleId,'setup','','','','','');
+		$oSvc->log($sModuleId,'setup','','','','','');
 	
 		//create config table
 		$sSqlRequest = "CREATE TABLE IF NOT EXISTS imva_config (
@@ -72,10 +71,10 @@ class setupImvaOxid2Cr extends oxUbase
   			changed timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   			PRIMARY KEY (oxid)
 			) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=12 ;";
-		oxDb::getDB(true)->execute($sSqlRequest);
+		@oxDb::getDB(true)->execute($sSqlRequest);
 	
 		//fill config data (defaults)
-		$sSqlRequest = "INSERT INTO `imva_config` (`oxid`, `module_name`, `param`, `value`, `changed`) VALUES
+		$sSqlRequest = "REPLACE INTO `imva_config` (`oxid`, `module_name`, `param`, `value`, `changed`) VALUES
 			(NULL, '".$sModuleId."', 'clre_api_key', 'enter_cr_api_key_here', CURRENT_TIMESTAMP),
 			(NULL, '".$sModuleId."', 'clre_wsdl_url', 'http://api.cleverreach.com/soap/interface_v5.0.php?wsdl', CURRENT_TIMESTAMP),
 			(NULL, '".$sModuleId."', 'clre_list_id', '1234', CURRENT_TIMESTAMP),
@@ -86,7 +85,7 @@ class setupImvaOxid2Cr extends oxUbase
 			(NULL, '".$sModuleId."', 'secret_key', '".$oSvc->generateSecretKey(32)."', CURRENT_TIMESTAMP),
 			(NULL, '".$sModuleId."', 'prfm_max_lines', '2', CURRENT_TIMESTAMP),
 			(NULL, '".$sModuleId."', 'debug', '0', CURRENT_TIMESTAMP) ;";
-		oxDb::getDB(true)->execute($sSqlRequest);
+		@oxDb::getDB(true)->execute($sSqlRequest);
 	
 		//create table imva_oxid2cr_log
 		$sSqlRequest = "CREATE TABLE IF NOT EXISTS imva_oxidmodules (
@@ -100,14 +99,14 @@ class setupImvaOxid2Cr extends oxUbase
 			  timestamp timestamp NOT NULL
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='".$sModuleId."';";
 		
-		oxDb::getDB(true)->execute($sSqlRequest);
+		@oxDb::getDB(true)->execute($sSqlRequest);
 	
 		//set up imva_oxid2cr_sent
-		$sSqlRequest = "ALTER TABLE oxnewssubscribed ADD imva_oxid2cr_sent INT( 1 ) NOT NULL DEFAULT 0";		
-		oxDb::getDB(true)->execute($sSqlRequest);
+		$sSqlRequest = "ALTER IGNORE TABLE oxnewssubscribed ADD imva_oxid2cr_sent INT( 1 ) NOT NULL DEFAULT 0";		
+		@oxDb::getDB(true)->execute($sSqlRequest);
 	
 		//set up imva_oxid2cr_cancelled
-		$sSqlRequest = "ALTER TABLE oxnewssubscribed ADD imva_oxid2cr_cancelled INT( 1 ) NOT NULL DEFAULT 0";
-		oxDb::getDB(true)->execute($sSqlRequest);
+		$sSqlRequest = "ALTER IGNORE TABLE oxnewssubscribed ADD imva_oxid2cr_cancelled INT( 1 ) NOT NULL DEFAULT 0";
+		@oxDb::getDB(true)->execute($sSqlRequest);
 	}
 }

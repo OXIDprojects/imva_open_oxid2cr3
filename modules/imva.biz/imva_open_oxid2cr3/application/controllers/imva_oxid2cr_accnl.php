@@ -1,7 +1,7 @@
 <?php
 
 /**
- * IMVA Oxid2CR 3 (Open Source Edition)
+ * imva.biz "Oxid2CR 3" CleverReach Connector (Open Source Edition)
  * 
  * 
  * 

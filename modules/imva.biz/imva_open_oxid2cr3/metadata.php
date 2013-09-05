@@ -46,8 +46,8 @@
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  *
- * 12/3/3-13/8/22
- * V 2.9.5.1
+ * 12/3/3-13/9/5
+ * V 2.9.5.2
  *
  */
 
@@ -66,7 +66,7 @@ $aModule = @array(
 					<a href="http://imva.biz/oxid/module/module_services" style="color:#06c; font-weight:bold;">imva.biz Module Services</a>.</i></p>',
 	),
 	'thumbnail'		=> 'out/src/imva_oxid2cr-logo.png',
-	'version'		=> '2.9.5.1',
+	'version'		=> '2.9.5.2',
 	'author'		=> 'Johannes Ackermann',
 	'url'			=> 'http://imva.biz',
 	'email' 		=> 'imva@imva.biz',
@@ -78,7 +78,6 @@ $aModule = @array(
 		'setupImvaOxid2Cr'			=>	'imva.biz/imva_open_oxid2cr3/application/controllers/setupImvaOxid2Cr.php',
 		'imva_oxid2cr'				=>	'imva.biz/imva_open_oxid2cr3/application/controllers/imva_oxid2cr.php',
       	'imva_oxid2cr_admin'		=>	'imva.biz/imva_open_oxid2cr3/application/admin/controllers/imva_oxid2cr_admin.php',
-      	'imva_oxid2cr_support'		=>	'imva.biz/imva_open_oxid2cr3/application/models/imva_oxid2cr_support.php',
 	),
 	'templates'	=>	array(
 		'imva_oxid2cr.tpl'			=>	'imva.biz/imva_open_oxid2cr3/application/views/imva_oxid2cr.tpl',
