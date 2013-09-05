@@ -46,8 +46,8 @@
  * (c) 2012-2013 imva.biz, Johannes Ackermann, ja@imva.biz
  * @author Johannes Ackermann
  *
- * 12/3/3-13/8/13
- * V 2.9.5
+ * 12/3/3-13/9/5
+ * V 2.9.5.2
  *
  */
 
@@ -160,7 +160,7 @@ class imva_oxid2cr_admin extends oxAdminView
 	 */
 	private function _setupDb()
 	{
-		setupImvaOxid2Cr::onActivate();
+		setupImvaOxid2Cr::activate();
 	}
 	
 	
